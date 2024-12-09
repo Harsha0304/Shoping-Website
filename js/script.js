@@ -1,15 +1,15 @@
 // Script to dynamically adjust prices based on the device type
 document.addEventListener("DOMContentLoaded", () => {
-    const products = document.querySelectorAll(".product");
+    const products = document.querySelectorAll(".price");
     const userAgent = navigator.userAgent.toLowerCase();
 
     // Determine device type
     const isDesktop = userAgent.includes("windows") || userAgent.includes("macintosh");
     const isAndroid = userAgent.includes("android");
 
-    // Adjust prices
+    // Adjust prices dynamically
     products.forEach((product) => {
-        const basePrice = parseFloat(product.getAttribute("data-price"));
+        const basePrice = parseFloat(product.textContent.replace('₹', '').trim());
         let adjustedPrice = basePrice;
 
         if (isDesktop) {
@@ -18,7 +18,6 @@ document.addEventListener("DOMContentLoaded", () => {
             adjustedPrice = basePrice * 0.7; // Decrease by 30%
         }
 
-        // Update the price in the UI
-        product.querySelector(".price").textContent = `₹${adjustedPrice.toFixed(2)}`;
+        product.textContent = `₹${adjustedPrice.toFixed(2)}`;
     });
 });
